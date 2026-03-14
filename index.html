@@ -92,11 +92,7 @@
     btn.disabled = true;
     var t = addMsg('⏳ Đang soạn câu trả lời...', 'typing');
     try {
-      var r = await fetch(PROXY, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({text: text})
-      });
+      var r = await fetch(PROXY + '?text=' + encodeURIComponent(text));
       var data = await r.json();
       t.remove();
       addMsg(data.answer || '❌ Không có phản hồi', 'bot');

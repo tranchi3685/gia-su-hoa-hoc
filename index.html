@@ -51,8 +51,7 @@
   var inp = document.getElementById('userInput');
   var box = document.getElementById('chatBox');
   var btn = document.getElementById('sendBtn');
-  var PROXY = 'https://script.google.com/macros/s/AKfycbzrvAq87Y9Er5oeEalJSiLDIc810v7t2GH4zHEzQel5uRHJdT-95zRTWXMwzFtxZNWj/exec';
-
+  var PROXY = 'https://script.google.com/macros/s/AKfycbyWxnvoYDSkaBQSnRm2oIdUvgsTASlM-VwqKgmUOaEHA60DJhv4tGhMzV09p6YTRB0C/exec';
   inp.addEventListener('keypress', function(e){ if(e.key==='Enter') sendMessage(); });
   inp.addEventListener('focus', function(){ setTimeout(function(){ window.scrollTo(0, document.body.scrollHeight); }, 400); });
 

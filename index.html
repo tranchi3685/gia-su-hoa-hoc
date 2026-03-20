@@ -12,18 +12,51 @@
     .header-info h1{font-size:18px;font-weight:700}
     .header-info p{font-size:13px;opacity:.85;margin-top:2px}
     .online{display:inline-block;width:8px;height:8px;background:#4caf50;border-radius:50%;margin-right:4px}
+    .login-screen{padding:30px 20px;display:flex;flex-direction:column;gap:16px;min-height:400px;justify-content:center}
+    .login-screen h2{color:#1565c0;font-size:18px;text-align:center}
+    .login-screen p{color:#666;font-size:14px;text-align:center}
+    .login-screen input{padding:12px 16px;border:1.5px solid #ddd;border-radius:12px;font-size:16px;outline:none;background:#f9f9f9}
+    .login-screen input:focus{border-color:#1976d2;background:white}
+    .login-btn{background:linear-gradient(135deg,#1976d2,#1565c0);color:white;border:none;border-radius:12px;padding:14px;font-size:16px;cursor:pointer;font-weight:600}
+    .test-screen{padding:20px;display:none;flex-direction:column;gap:16px}
+    .test-header{background:#e3f2fd;border-radius:12px;padding:14px;text-align:center}
+    .test-header h3{color:#1565c0;font-size:16px}
+    .test-header p{color:#666;font-size:13px;margin-top:4px}
+    .question-card{background:white;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,0.1)}
+    .question-card h4{color:#333;font-size:15px;margin-bottom:12px;line-height:1.5}
+    .option{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid #e0e0e0;border-radius:8px;margin-bottom:8px;cursor:pointer;transition:all 0.2s}
+    .option:hover{border-color:#1976d2;background:#e3f2fd}
+    .option.selected{border-color:#1976d2;background:#e3f2fd}
+    .option label{font-size:14px;cursor:pointer;line-height:1.4}
+    .progress{background:#e0e0e0;border-radius:10px;height:6px;margin-bottom:4px}
+    .progress-bar{background:#1976d2;height:6px;border-radius:10px;transition:width 0.3s}
+    .progress-text{font-size:12px;color:#666;text-align:right}
+    .submit-btn{background:linear-gradient(135deg,#1976d2,#1565c0);color:white;border:none;border-radius:12px;padding:14px;font-size:16px;cursor:pointer;font-weight:600;display:none}
+    .result-screen{padding:20px;display:none;flex-direction:column;gap:16px;align-items:center}
+    .result-card{background:white;border-radius:16px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.1);width:100%}
+    .result-emoji{font-size:48px;margin-bottom:12px}
+    .result-level{font-size:22px;font-weight:700;margin-bottom:8px}
+    .result-score{font-size:16px;color:#666;margin-bottom:16px}
+    .result-desc{font-size:14px;color:#555;line-height:1.6;background:#f5f5f5;padding:12px;border-radius:8px}
+    .start-chat-btn{background:linear-gradient(135deg,#1976d2,#1565c0);color:white;border:none;border-radius:12px;padding:14px 24px;font-size:16px;cursor:pointer;font-weight:600;width:100%}
+    .chat-screen{display:none;flex-direction:column}
     .chat-box{padding:14px;display:flex;flex-direction:column;gap:10px;min-height:300px}
     .bot-wrap{display:flex;align-items:flex-end;gap:8px}
     .bot-icon{font-size:20px;flex-shrink:0;margin-bottom:2px}
-    .message{max-width:78%;padding:12px 16px;border-radius:18px;font-size:16px;line-height:1.6;word-break:break-word}
+    .message{max-width:78%;padding:12px 16px;border-radius:18px;font-size:15px;line-height:1.6;word-break:break-word}
     .bot{background:white;color:#222;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
     .user{background:linear-gradient(135deg,#1976d2,#1565c0);color:white;border-bottom-right-radius:4px;align-self:flex-end}
-    .typing{background:white;color:#999;border-bottom-left-radius:4px;font-style:italic;font-size:14px}
+    .typing{background:white;color:#999;border-bottom-left-radius:4px;font-style:italic;font-size:13px}
     .input-area{background:white;padding:10px 12px;display:flex;gap:8px;align-items:center;border-top:1px solid #e0e0e0;box-shadow:0 -2px 8px rgba(0,0,0,0.08);position:sticky;bottom:0}
     .input-area input{flex:1;min-width:0;padding:10px 14px;border:1.5px solid #ddd;border-radius:24px;font-size:16px;outline:none;background:#f9f9f9}
     .input-area input:focus{border-color:#1976d2;background:white}
     .send-btn{flex-shrink:0;width:44px;height:44px;background:linear-gradient(135deg,#1976d2,#1565c0);color:white;border:none;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
     .send-btn:disabled{background:#ccc}
+    .level-badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;margin-left:8px}
+    .level-gioi{background:#e8f5e9;color:#2e7d32}
+    .level-kha{background:#e3f2fd;color:#1565c0}
+    .level-tb{background:#fff3e0;color:#e65100}
+    .level-yeu{background:#fce4ec;color:#c62828}
   </style>
 </head>
 <body>
@@ -35,72 +68,154 @@
     </div>
   </div>
 
-  <div class="chat-box" id="chatBox">
-    <div class="bot-wrap">
-      <div class="bot-icon">🤖</div>
-      <div class="message bot">👋 Xin chào em! Tôi là <b>Gia sư Hóa học AI</b> 🧪<br><br>Tôi sẽ <b>gợi ý và dẫn dắt</b> để em tự tìm ra đáp án nhé! 😊<br><br>Em có câu hỏi Hóa học lớp 11-12 nào không?</div>
+  <div class="login-screen" id="loginScreen">
+    <h2>👋 Chào mừng em!</h2>
+    <p>Vui lòng nhập thông tin để bắt đầu</p>
+    <input type="text" id="studentId" placeholder="Mã học sinh (VD: HS001)" autocomplete="off"/>
+    <input type="text" id="studentName" placeholder="Họ và tên" autocomplete="off"/>
+    <button class="login-btn" onclick="startLogin()">Bắt đầu →</button>
+  </div>
+
+  <div class="test-screen" id="testScreen">
+    <div class="test-header">
+      <h3>📝 Bài kiểm tra đầu vào</h3>
+      <p>5 câu hỏi Hóa học lớp 10 • Chọn đáp án đúng</p>
+    </div>
+    <div class="progress">
+      <div class="progress-bar" id="progressBar" style="width:0%"></div>
+    </div>
+    <div class="progress-text" id="progressText">0/5 câu</div>
+    <div id="questionsContainer"></div>
+    <button class="submit-btn" id="submitBtn" onclick="submitTest()">Nộp bài ✓</button>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-card">
+      <div class="result-emoji" id="resultEmoji">🎉</div>
+      <div class="result-level" id="resultLevel"></div>
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-desc" id="resultDesc"></div>
+    </div>
+    <button class="start-chat-btn" onclick="startChat()">Bắt đầu học với Gia sư →</button>
+  </div>
+
+  <div class="chat-screen" id="chatScreen">
+    <div class="chat-box" id="chatBox"></div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Nhập câu hỏi Hóa học..." autocomplete="off"/>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
     </div>
   </div>
 
-  <div class="input-area">
-    <input type="text" id="userInput" placeholder="Nhập câu hỏi Hóa học..." autocomplete="off"/>
-    <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
-  </div>
-
 <script>
-  var inp = document.getElementById('userInput');
-  var box = document.getElementById('chatBox');
-  var btn = document.getElementById('sendBtn');
-  var PROXY = 'https://script.google.com/macros/s/AKfycby5mztFLDlgUWc74r4dzWKIp8UeEJr54V-bIBYxY7hOo2T5E2jg1k43rtTLjwVacXY1/exec';
-  inp.addEventListener('keypress', function(e){ if(e.key==='Enter') sendMessage(); });
-  inp.addEventListener('focus', function(){ setTimeout(function(){ window.scrollTo(0, document.body.scrollHeight); }, 400); });
+  var PROXY = 'https://script.google.com/macros/s/AKfycbxcfL1YfJxq8KN9sp-aTHglMOOIzcWOwy-2K6IwEt5d5ul4Gc48wH7IxiCOpP6hcYep/exec';
+  var studentId = '';
+  var studentName = '';
+  var studentLevel = '';
+  var answers = {};
 
-  function scrollDown(){ window.scrollTo(0, document.body.scrollHeight); }
+  var QUESTIONS = [
+    {id:1,text:"Nguyên tử của nguyên tố X có Z = 17. Cấu hình electron của X là:",options:["A. 1s²2s²2p⁶3s²3p⁵","B. 1s²2s²2p⁶3s²3p⁶","C. 1s²2s²2p⁶3s²3p³","D. 1s²2s²2p⁶3s²3p⁴"],correct:"A"},
+    {id:2,text:"Phản ứng nào sau đây là phản ứng oxi hóa - khử?",options:["A. CaO + CO₂ → CaCO₃","B. 2Na + 2H₂O → 2NaOH + H₂↑","C. NaOH + HCl → NaCl + H₂O","D. Na₂O + H₂O → 2NaOH"],correct:"B"},
+    {id:3,text:"Liên kết trong phân tử HCl là liên kết gì?",options:["A. Liên kết ion","B. Liên kết cộng hóa trị không phân cực","C. Liên kết cộng hóa trị có phân cực","D. Liên kết kim loại"],correct:"C"},
+    {id:4,text:"Tốc độ phản ứng KHÔNG phụ thuộc vào yếu tố nào?",options:["A. Nhiệt độ","B. Nồng độ chất phản ứng","C. Màu sắc của chất","D. Chất xúc tác"],correct:"C"},
+    {id:5,text:"Dung dịch nào sau đây có pH > 7?",options:["A. HCl","B. NaCl","C. H₂SO₄","D. NaOH"],correct:"D"}
+  ];
 
-  function addMsg(text, type){
+  function startLogin(){
+    studentId=document.getElementById('studentId').value.trim();
+    studentName=document.getElementById('studentName').value.trim();
+    if(!studentId||!studentName){alert('Vui lòng nhập đầy đủ thông tin!');return;}
+    document.getElementById('loginScreen').style.display='none';
+    showTest();
+  }
+
+  function showTest(){
+    document.getElementById('testScreen').style.display='flex';
+    var container=document.getElementById('questionsContainer');
+    container.innerHTML='';
+    QUESTIONS.forEach(function(q){
+      var card=document.createElement('div');card.className='question-card';
+      var optHtml=q.options.map(function(opt){
+        var letter=opt.charAt(0);
+        return '<div class="option" id="opt_'+q.id+'_'+letter+'" onclick="selectOption('+q.id+',\''+letter+'\')"><label>'+opt+'</label></div>';
+      }).join('');
+      card.innerHTML='<h4>Câu '+q.id+': '+q.text+'</h4>'+optHtml;
+      container.appendChild(card);
+    });
+  }
+
+  function selectOption(qId,letter){
+    answers[qId]=letter;
+    QUESTIONS.find(function(q){return q.id===qId;}).options.forEach(function(opt){
+      var el=document.getElementById('opt_'+qId+'_'+opt.charAt(0));
+      if(el)el.classList.remove('selected');
+    });
+    var sel=document.getElementById('opt_'+qId+'_'+letter);
+    if(sel)sel.classList.add('selected');
+    var count=Object.keys(answers).length;
+    document.getElementById('progressBar').style.width=(count/5*100)+'%';
+    document.getElementById('progressText').textContent=count+'/5 câu';
+    if(count===5)document.getElementById('submitBtn').style.display='block';
+  }
+
+  function submitTest(){
+    var score=0;
+    QUESTIONS.forEach(function(q){if(answers[q.id]===q.correct)score++;});
+    var level,emoji,desc;
+    if(score===5){level='Giỏi';emoji='🏆';desc='Em có nền tảng Hóa học rất vững! Gia sư sẽ đặt câu hỏi nâng cao để phát triển tư duy.';}
+    else if(score>=3){level='Khá';emoji='⭐';desc='Em nắm khá tốt kiến thức cơ bản! Gia sư sẽ giúp em củng cố và mở rộng thêm.';}
+    else if(score>=2){level='Trung bình';emoji='📚';desc='Em đã có kiến thức nền. Gia sư sẽ gợi ý từng bước để em hiểu sâu hơn.';}
+    else{level='Yếu';emoji='💪';desc='Không sao em nhé! Gia sư sẽ hướng dẫn thật chi tiết từ kiến thức cơ bản.';}
+    studentLevel=level;
+    document.getElementById('testScreen').style.display='none';
+    document.getElementById('resultScreen').style.display='flex';
+    document.getElementById('resultEmoji').textContent=emoji;
+    document.getElementById('resultLevel').textContent='Xếp loại: '+level;
+    document.getElementById('resultScore').textContent='Điểm: '+score+'/5 câu đúng';
+    document.getElementById('resultDesc').textContent=desc;
+    fetch(PROXY+'?action=saveTest&studentId='+encodeURIComponent(studentId)+'&studentName='+encodeURIComponent(studentName)+'&level='+encodeURIComponent(level)+'&score='+score);
+  }
+
+  function startChat(){
+    document.getElementById('resultScreen').style.display='none';
+    document.getElementById('chatScreen').style.display='flex';
+    var levelClass={'Giỏi':'gioi','Khá':'kha','Trung bình':'tb','Yếu':'yeu'}[studentLevel]||'tb';
+    addMsg('👋 Xin chào <b>'+studentName+'</b>! <span class="level-badge level-'+levelClass+'">'+studentLevel+'</span><br><br>Tôi sẽ hỗ trợ em học Hóa học theo cách phù hợp nhất. Em có câu hỏi nào không?','bot');
+  }
+
+  var inp=document.getElementById('userInput');
+  var box=document.getElementById('chatBox');
+  var btn=document.getElementById('sendBtn');
+  inp.addEventListener('keypress',function(e){if(e.key==='Enter')sendMessage();});
+  inp.addEventListener('focus',function(){setTimeout(function(){window.scrollTo(0,document.body.scrollHeight);},400);});
+  function scrollDown(){window.scrollTo(0,document.body.scrollHeight);}
+
+  function addMsg(text,type){
     var el;
-    if(type === 'bot'){
-      var wrap = document.createElement('div');
-      wrap.className = 'bot-wrap';
-      var icon = document.createElement('div');
-      icon.className = 'bot-icon';
-      icon.textContent = '🤖';
-      var d = document.createElement('div');
-      d.className = 'message bot';
-      d.innerHTML = text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<b>$1</b>');
-      wrap.appendChild(icon);
-      wrap.appendChild(d);
-      box.appendChild(wrap);
-      el = wrap;
-    } else {
-      var d = document.createElement('div');
-      d.className = 'message ' + type;
-      d.innerHTML = text.replace(/\n/g,'<br>');
-      box.appendChild(d);
-      el = d;
+    if(type==='bot'){
+      var wrap=document.createElement('div');wrap.className='bot-wrap';
+      var icon=document.createElement('div');icon.className='bot-icon';icon.textContent='🤖';
+      var d=document.createElement('div');d.className='message bot';
+      d.innerHTML=text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<b>$1</b>');
+      wrap.appendChild(icon);wrap.appendChild(d);box.appendChild(wrap);el=wrap;
+    }else{
+      var d=document.createElement('div');d.className='message '+type;
+      d.innerHTML=text.replace(/\n/g,'<br>');box.appendChild(d);el=d;
     }
-    setTimeout(scrollDown, 100);
-    return el;
+    setTimeout(scrollDown,100);return el;
   }
 
   async function sendMessage(){
-    var text = inp.value.trim();
-    if(!text) return;
-    addMsg(text, 'user');
-    inp.value = '';
-    btn.disabled = true;
-    var t = addMsg('⏳ Đang soạn câu trả lời...', 'typing');
-    try {
-      var r = await fetch(PROXY + '?text=' + encodeURIComponent(text));
-      var data = await r.json();
-      t.remove();
-      addMsg(data.answer || '❌ Không có phản hồi', 'bot');
-    } catch(e) {
-      t.remove();
-      addMsg('❌ Lỗi kết nối: ' + e.message, 'bot');
-    }
-    btn.disabled = false;
-    setTimeout(scrollDown, 200);
+    var text=inp.value.trim();if(!text)return;
+    addMsg(text,'user');inp.value='';btn.disabled=true;
+    var t=addMsg('⏳ Đang soạn câu trả lời...','typing');
+    try{
+      var r=await fetch(PROXY+'?text='+encodeURIComponent(text)+'&studentId='+encodeURIComponent(studentId)+'&level='+encodeURIComponent(studentLevel));
+      var data=await r.json();t.remove();
+      addMsg(data.answer||'❌ Không có phản hồi','bot');
+    }catch(e){t.remove();addMsg('❌ Lỗi kết nối: '+e.message,'bot');}
+    btn.disabled=false;setTimeout(scrollDown,200);
   }
 </script>
 </body>

@@ -109,10 +109,11 @@
   </div>
 
 <script>
-  var PROXY='https://script.google.com/macros/s/AKfycbxcfL1YfJxq8KN9sp-aTHglMOOIzcWOwy-2K6IwEt5d5ul4Gc48wH7IxiCOpP6hcYep/exec';
+  var PROXY='https://script.google.com/macros/s/AKfycbzcfpCPuaxObyIOt8uoYpitm_LNHFxiHYmWNnrLaTGxvLBz3MiPVjp0TpCX8c2V07MY/exec';
   var studentId='';
   var studentLevel='';
   var answers={};
+  var chatHistory=[]; // Lưu lịch sử hội thoại
 
   var QUESTIONS=[
     {id:1,text:"Nguyên tử của nguyên tố X có Z = 17. Cấu hình electron của X là:",options:["A. 1s²2s²2p⁶3s²3p⁵","B. 1s²2s²2p⁶3s²3p⁶","C. 1s²2s²2p⁶3s²3p³","D. 1s²2s²2p⁶3s²3p⁴"],correct:"A"},
@@ -191,12 +192,14 @@
   }
 
   function startChatDirect(){
+    chatHistory=[];
     document.getElementById('chatScreen').style.display='flex';
     var levelClass={'Giỏi':'gioi','Khá':'kha','Trung bình':'tb','Yếu':'yeu'}[studentLevel]||'tb';
     addMsg('👋 Chào mừng em quay lại! <span class="level-badge level-'+levelClass+'">'+studentLevel+'</span><br><br>Em có câu hỏi Hóa học nào không?','bot');
   }
 
   function startChat(){
+    chatHistory=[];
     document.getElementById('resultScreen').style.display='none';
     document.getElementById('chatScreen').style.display='flex';
     var levelClass={'Giỏi':'gioi','Khá':'kha','Trung bình':'tb','Yếu':'yeu'}[studentLevel]||'tb';
@@ -227,12 +230,28 @@
 
   async function sendMessage(){
     var text=inp.value.trim();if(!text)return;
-    addMsg(text,'user');inp.value='';btn.disabled=true;
+    addMsg(text,'user');
+    inp.value='';btn.disabled=true;
+
+    // Thêm vào lịch sử
+    chatHistory.push({role:'user',content:text});
+
     var t=addMsg('⏳ Đang soạn câu trả lời...','typing');
     try{
-      var r=await fetch(PROXY+'?text='+encodeURIComponent(text)+'&studentId='+encodeURIComponent(studentId)+'&level='+encodeURIComponent(studentLevel));
-      var data=await r.json();t.remove();
-      addMsg(data.answer||'❌ Không có phản hồi','bot');
+      var r=await fetch(PROXY+
+        '?text='+encodeURIComponent(text)+
+        '&studentId='+encodeURIComponent(studentId)+
+        '&level='+encodeURIComponent(studentLevel)+
+        '&history='+encodeURIComponent(JSON.stringify(chatHistory.slice(-8)))
+      );
+      var data=await r.json();
+      t.remove();
+      var answer=data.answer||'❌ Không có phản hồi';
+      addMsg(answer,'bot');
+
+      // Lưu câu trả lời vào lịch sử
+      chatHistory.push({role:'bot',content:answer});
+
     }catch(e){t.remove();addMsg('❌ Lỗi kết nối: '+e.message,'bot');}
     btn.disabled=false;setTimeout(scrollDown,200);
   }

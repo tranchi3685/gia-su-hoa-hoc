@@ -245,41 +245,37 @@ return el;
     addMsg(text,'user');
     inp.value='';btn.disabled=true;
 
+    // Lưu tin nhắn user vào lịch sử TRƯỚC khi gửi
+    chatHistory.push({role:'user',content:text});
+
     var t=addMsg('⏳ Đang soạn câu trả lời...','typing');
-    try{
-      var r=await fetch(PROXY+
-        '?text='+encodeURIComponent(text)+
-        '&studentId='+encodeURIComponent(studentId)+
-        '&level='+encodeURIComponent(studentLevel)+
-        '&history='+encodeURIComponent(JSON.stringify(chatHistory.slice(-4)))
-      );
-      var data=await r.json();
-      t.remove();
-      var answer=data.answer||'❌ Không có phản hồi';
-      addMsg(answer,'bot');
-      // Chỉ lưu vào lịch sử khi thành công
-      chatHistory.push({role:'user',content:text});
-      chatHistory.push({role:'bot',content:answer});
-    }catch(e){
-      t.remove();
-      addMsg('⚠️ Lỗi kết nối, thử lại...','typing');
-      // Thử lại 1 lần
+    
+    var success = false;
+    var attempts = 0;
+    
+    while(!success && attempts < 3) {
+      attempts++;
       try{
-        var r2=await fetch(PROXY+
+        var histSize = Math.max(1, 6 - attempts*2); // Giảm lịch sử mỗi lần thử
+        var r=await fetch(PROXY+
           '?text='+encodeURIComponent(text)+
           '&studentId='+encodeURIComponent(studentId)+
           '&level='+encodeURIComponent(studentLevel)+
-          '&history='+encodeURIComponent(JSON.stringify(chatHistory.slice(-2)))
+          '&history='+encodeURIComponent(JSON.stringify(chatHistory.slice(-(histSize*2))))
         );
-        var data2=await r2.json();
-        document.querySelector('.typing') && document.querySelector('.typing').remove();
-        var answer2=data2.answer||'❌ Không có phản hồi';
-        addMsg(answer2,'bot');
-        chatHistory.push({role:'user',content:text});
-        chatHistory.push({role:'bot',content:answer2});
-      }catch(e2){
-        document.querySelector('.typing') && document.querySelector('.typing').remove();
-        addMsg('❌ Lỗi kết nối. Vui lòng thử lại!','bot');
+        var data=await r.json();
+        t.remove();
+        var answer=data.answer||'❌ Không có phản hồi';
+        addMsg(answer,'bot');
+        chatHistory.push({role:'bot',content:answer});
+        success = true;
+      }catch(e){
+        if(attempts >= 3){
+          t.remove();
+          addMsg('❌ Lỗi kết nối. Vui lòng thử lại!','bot');
+          // Xóa tin nhắn user khỏi lịch sử nếu thất bại hoàn toàn
+          chatHistory.pop();
+        }
       }
     }
     btn.disabled=false;setTimeout(scrollDown,200);

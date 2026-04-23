@@ -1,6 +1,3 @@
- · TXT
-Copy
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -80,7 +77,7 @@ Copy
       <p><span class="online"></span>Hỗ trợ học sinh lớp 10-12 • 24/7</p>
     </div>
   </div>
- 
+
   <div class="login-screen" id="loginScreen">
     <h2>👋 Chào mừng em!</h2>
     <p>Nhập mã học sinh để bắt đầu</p>
@@ -88,7 +85,7 @@ Copy
     <button class="login-btn" id="loginBtn" onclick="startLogin()">Tiếp theo →</button>
     <div class="checking" id="checkingMsg">⏳ Đang kiểm tra...</div>
   </div>
- 
+
   <div class="test-screen" id="testScreen">
     <div class="test-header">
       <h3>📝 Bài kiểm tra đầu vào</h3>
@@ -101,7 +98,7 @@ Copy
     <div id="questionsContainer"></div>
     <button class="submit-btn" id="submitBtn" onclick="submitTest()">Nộp bài ✓</button>
   </div>
- 
+
   <div class="result-screen" id="resultScreen">
     <div class="result-card">
       <div class="result-emoji" id="resultEmoji">🎉</div>
@@ -111,7 +108,7 @@ Copy
     </div>
     <button class="start-chat-btn" onclick="startChat()">Bắt đầu học với Gia sư →</button>
   </div>
- 
+
   <div class="chat-screen" id="chatScreen">
     <div class="chat-box" id="chatBox"></div>
     <div class="input-area">
@@ -119,14 +116,14 @@ Copy
       <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
     </div>
   </div>
- 
+
 <script>
   var PROXY='https://script.google.com/macros/s/AKfycbxPKcNAwEUs1Lh707CptSTKCjhJVa_4yLw6qqEfKmhhuPd8O8JJIpMl54vaT1tpZBd6/exec';
   var studentId='';
   var studentLevel='';
   var answers={};
   var chatHistory=[];
- 
+
   var QUESTIONS=[
     {id:1,text:"Nguyên tử của nguyên tố X có Z = 17. Cấu hình electron của X là:",options:["A. 1s²2s²2p⁶3s²3p⁵","B. 1s²2s²2p⁶3s²3p⁶","C. 1s²2s²2p⁶3s²3p³","D. 1s²2s²2p⁶3s²3p⁴"],correct:"A"},
     {id:2,text:"Phản ứng nào sau đây là phản ứng oxi hóa - khử?",options:["A. CaO + CO₂ → CaCO₃","B. 2Na + 2H₂O → 2NaOH + H₂↑","C. NaOH + HCl → NaCl + H₂O","D. Na₂O + H₂O → 2NaOH"],correct:"B"},
@@ -134,7 +131,7 @@ Copy
     {id:4,text:"Tốc độ phản ứng KHÔNG phụ thuộc vào yếu tố nào?",options:["A. Nhiệt độ","B. Nồng độ chất phản ứng","C. Màu sắc của chất","D. Chất xúc tác"],correct:"C"},
     {id:5,text:"Dung dịch nào sau đây có pH > 7?",options:["A. HCl","B. NaCl","C. H₂SO₄","D. NaOH"],correct:"D"}
   ];
- 
+
   // ===== HÀM GỌI API DÙNG JSONP (BYPASS CORS) =====
   function callAPI(params, callback) {
     var cbName = 'cb_' + Date.now();
@@ -161,7 +158,7 @@ Copy
     }, 15000);
     document.head.appendChild(script);
   }
- 
+
   // ===== LOGIN =====
   function startLogin(){
     studentId=document.getElementById('studentId').value.trim();
@@ -178,7 +175,7 @@ Copy
       }
     });
   }
- 
+
   // ===== TEST =====
   function showTest(){
     document.getElementById('testScreen').style.display='flex';
@@ -194,7 +191,7 @@ Copy
       container.appendChild(card);
     });
   }
- 
+
   function selectOption(qId,letter){
     answers[qId]=letter;
     QUESTIONS.find(function(q){return q.id===qId;}).options.forEach(function(opt){
@@ -208,7 +205,7 @@ Copy
     document.getElementById('progressText').textContent=count+'/5 câu';
     if(count===5)document.getElementById('submitBtn').style.display='block';
   }
- 
+
   function submitTest(){
     var score=0;
     QUESTIONS.forEach(function(q){if(answers[q.id]===q.correct)score++;});
@@ -226,7 +223,7 @@ Copy
     document.getElementById('resultDesc').textContent=desc;
     callAPI('action=saveTest&studentId='+encodeURIComponent(studentId)+'&level='+encodeURIComponent(level)+'&score='+score, function(){});
   }
- 
+
   // ===== CHAT =====
   function startChatDirect(){
     chatHistory=[];
@@ -234,7 +231,7 @@ Copy
     var levelClass={'Giỏi':'gioi','Khá':'kha','Trung bình':'tb','Yếu':'yeu'}[studentLevel]||'tb';
     addMsg('👋 Chào mừng em quay lại! <span class="level-badge level-'+levelClass+'">'+studentLevel+'</span><br><br>Em có câu hỏi Hóa học nào không?','bot');
   }
- 
+
   function startChat(){
     chatHistory=[];
     document.getElementById('resultScreen').style.display='none';
@@ -242,14 +239,14 @@ Copy
     var levelClass={'Giỏi':'gioi','Khá':'kha','Trung bình':'tb','Yếu':'yeu'}[studentLevel]||'tb';
     addMsg('👋 Xin chào em! <span class="level-badge level-'+levelClass+'">'+studentLevel+'</span><br><br>Tôi sẽ hỗ trợ em theo cách phù hợp nhất. Em có câu hỏi nào không?','bot');
   }
- 
+
   var inp=document.getElementById('userInput');
   var box=document.getElementById('chatBox');
   var btn=document.getElementById('sendBtn');
   inp.addEventListener('keypress',function(e){if(e.key==='Enter')sendMessage();});
   inp.addEventListener('focus',function(){setTimeout(function(){window.scrollTo(0,document.body.scrollHeight);},400);});
   function scrollDown(){window.scrollTo(0,document.body.scrollHeight);}
- 
+
   function addMsg(text,type){
     var el;
     if(type==='bot'||type==='typing'){
@@ -266,19 +263,19 @@ Copy
     setTimeout(function(){if(window.MathJax)MathJax.typesetPromise();},200);
     return el;
   }
- 
+
   function sendMessage(){
     var text=inp.value.trim();if(!text)return;
     addMsg(text,'user');
     inp.value='';btn.disabled=true;
     chatHistory.push({role:'user',content:text});
     var typingEl=addMsg('⏳ Đang soạn câu trả lời...','typing');
- 
+
     var params='text='+encodeURIComponent(text)+
       '&studentId='+encodeURIComponent(studentId)+
       '&level='+encodeURIComponent(studentLevel)+
       '&history='+encodeURIComponent(JSON.stringify(chatHistory.slice(-6)));
- 
+
     callAPI(params, function(err, data) {
       typingEl.remove();
       if(err || !data){
@@ -296,4 +293,3 @@ Copy
 </script>
 </body>
 </html>
- 
